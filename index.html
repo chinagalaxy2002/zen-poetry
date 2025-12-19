@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>片羽 - 每日一遇</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS 样式定义 --- */
+        :root {
+            --bg-color: #F7F5F0; /* 羊皮纸米色 */
+            --text-color: #2B2B2B; /* 墨色 */
+            --accent-color: #C83C23; /* 朱砂红 */
+            --secondary-text-color: #888888; /* 烟灰 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            background-color: var(--bg-color);
+            font-family: 'Noto Serif SC', serif; /* 全局宋体 */
+            overflow: hidden; /* 防止滚动 */
+            cursor: pointer; /* 提示可点击 */
+        }
+
+        /* 主容器，用于居中内容 */
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding-top: 60px;
+        }
+
+        /* 顶部 Logo 区域 */
+        .top-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background-color: #EEECE5;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .logo-text {
+            font-family: 'Ma Shan Zheng', cursive; /* 书法字体 */
+            font-size: 28px;
+            color: var(--text-color);
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        .date-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--accent-color);
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        /* 核心诗词展示区域 */
+        .poem-container-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding-bottom: 100px; /* 向上提一点 */
+        }
+
+        /* 关键：竖排文字容器 */
+        .vertical-content {
+            /* 核心魔法：文字竖排，从右向左 */
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            
+            display: flex;
+            align-items: center; /* 在竖排模式下，控制水平居中 */
+            gap: 30px; /* 诗句和作者之间的间距 */
+            
+            /* 动画过渡效果 */
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* 隐藏状态，用于切换动画 */
+        .vertical-content.fade-out {
+            opacity: 0;
+        }
+
+        /* 诗句主体 */
+        .poem-text {
+            font-size: 26px;
+            color: var(--text-color);
+            font-weight: 400;
+            line-height: 1.8; /* 行间距 */
+            letter-spacing: 4px; /* 字间距 */
+        }
+        
+        /* 用于强制换行的段落 */
+        .poem-line {
+            display: inline-block; /* 让每一行独立 */
+            margin-left: 12px; /* 行与行之间的距离 */
+        }
+
+        /* 作者署名 */
+        .poem-author {
+            font-size: 13px;
+            color: var(--secondary-text-color);
+            letter-spacing: 2px;
+            margin-top: 60px; /* 视觉上，作者名会比诗句低一些 */
+        }
+
+        /* 底部提示 */
+        .footer-hint {
+            position: absolute;
+            bottom: 30px;
+            font-size: 12px;
+            color: #B0B0B0;
+            opacity: 0.5;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-container">
+        <div class="top-section">
+            <div class="logo-circle">
+                <div class="logo-text">古<br>文</div>
+            </div>
+            <div class="date-text">一 十 二 日</div>
+        </div>
+
+        <div class="poem-container-wrapper">
+            <div class="vertical-content" id="poem-display">
+                <div class="poem-text" id="poem-content"></div>
+                <div class="poem-author" id="poem-author"></div>
+            </div>
+        </div>
+
+        <div class="footer-hint">· 点击屏幕邂逅新词 ·</div>
+    </div>
+
+
+    <script>
+        // --- JavaScript 逻辑 ---
+
+        // 1. 诗词数据库 (你可以随意添加更多)
+        // 注意：为了更好的竖排控制，诗句中的换行建议用多个字符串表示数组，或者在字符串里用特殊符号分割
+        const poemsData = [
+            {
+                lines: ["对酒卷帘邀明月", "风露透窗纱"],
+                author: "苏轼 · 少年游"
+            },
+            {
+                lines: ["人生天地间", "忽如远行客"],
+                author: "古诗十九首"
+            },
+            {
+                lines: ["醉后不知天在水", "满船清梦压星河"],
+                author: "唐温如 · 题龙阳县青草湖"
+            },
+            {
+                lines: ["行到水穷处", "坐看云起时"],
+                author: "王维 · 终南别业"
+            },
+            {
+                lines: ["欲买桂花同载酒", "终不似", "少年游"],
+                author: "刘过 · 唐多令"
+            },
+            {
+                lines: ["曾经沧海难为水", "除却巫山不是云"],
+                author: "元稹 · 离思"
+            },
+             {
+                lines: ["桃李春风一杯酒", "江湖夜雨十年灯"],
+                author: "黄庭坚 · 寄黄几复"
+            }
+        ];
+
+        let currentIndex = -1;
+        const poemDisplayElement = document.getElementById('poem-display');
+        const contentElement = document.getElementById('poem-content');
+        const authorElement = document.getElementById('poem-author');
+        const mainContainer = document.getElementById('main-container');
+
+        // 2. 获取随机诗句的函数
+        function getRandomPoem() {
+            let newIndex;
+            // 确保不会连续随机到同一首（除非只有一首）
+            do {
+                newIndex = Math.floor(Math.random() * poemsData.length);
+            } while (newIndex === currentIndex && poemsData.length > 1);
+            currentIndex = newIndex;
+            return poemsData[currentIndex];
+        }
+
+        // 3. 在屏幕上显示诗句的函数（包含动画逻辑）
+        function displayPoem() {
+            // 先添加 fade-out 类，让文字渐隐
+            poemDisplayElement.classList.add('fade-out');
+
+            // 等待过渡动画完成 (这里设置 400ms，为主动画时间的一半，效果较好)
+            setTimeout(() => {
+                const poem = getRandomPoem();
+                
+                // 构建诗句 HTML结构：每一行用一个 span 包裹，确保竖排对齐好看
+                let contentHtml = '';
+                poem.lines.forEach(line => {
+                    contentHtml += `<span class="poem-line">${line}</span>`;
+                });
+                contentElement.innerHTML = contentHtml;
+                authorElement.textContent = poem.author;
+
+                // 移除 fade-out 类，文字渐显
+                poemDisplayElement.classList.remove('fade-out');
+            }, 400); 
+        }
+
+        // 4. 事件监听
+        // 页面加载完成后，立即显示一首
+        window.onload = displayPoem;
+
+        // 点击屏幕任何位置，切换下一首
+        mainContainer.addEventListener('click', displayPoem);
+
+    </script>
+</body>
+</html>
