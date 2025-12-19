@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>片羽 - 每日一遇</title>
+    <title> 古诗文 </title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,12 +42,45 @@
             padding-top: 60px;
         }
 
+        /* --- 主页按钮样式 --- */
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+            border: 1px solid rgba(43, 43, 43, 0.1);
+            border-radius: 50%;
+            z-index: 100;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .home-btn:hover {
+            background-color: #EEECE5;
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 600px) {
+            .home-btn {
+                top: 15px;
+                left: 15px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
         /* --- 顶部区域 --- */
         .top-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 10; /* 保证在最上层 */
+            z-index: 10;
         }
 
         .logo-circle {
@@ -84,24 +117,23 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center; /* 垂直居中 */
-            padding-bottom: 80px; /* 视觉重心上移 */
+            align-items: center;
+            padding-bottom: 80px;
         }
 
-        /* 关键布局修改：
-           writing-mode: vertical-rl; 让整个容器内的块级元素(p, div)从右向左排列。
-           text-orientation: upright; 让文字直立。
+        /* 竖排排版核心：
+           vertical-rl: 垂直排列，从右向左。
+           text-orientation: upright: 文字直立。
         */
         .vertical-content {
             writing-mode: vertical-rl;
             text-orientation: upright;
-            height: 60vh; /* 限制高度，让文字垂直居中分布 */
+            height: 60vh;
             display: flex;
-            flex-direction: column; /* 在 vertical-rl 下，column 其实是横向排列 */
+            flex-direction: column; /* 在vertical-rl下，column表现为水平从右向左堆叠 */
             justify-content: center; /* 水平居中 */
-            align-items: flex-start; /* 垂直顶部对齐 (视觉上的顶部) */
+            align-items: flex-start; /* 垂直顶部对齐 */
             
-            /* 动画过渡 */
             opacity: 1;
             transition: opacity 0.8s ease-in-out;
         }
@@ -115,18 +147,18 @@
             font-size: 24px;
             color: var(--text-color);
             line-height: 1.5;
-            letter-spacing: 6px; /* 字间距加大，更有呼吸感 */
-            margin-left: 20px; /* 列与列之间的间距 (在 vertical-rl 模式下，margin-left 是物理左侧) */
+            letter-spacing: 6px;
+            margin-left: 20px; /* 列与列之间的间距 */
             font-weight: 400;
         }
 
-        /* 作者单独一列，样式不同 */
+        /* 作者单独一列 */
         .poem-author {
             font-size: 12px;
             color: var(--secondary-text);
             letter-spacing: 3px;
-            margin-left: 35px; /* 离正文稍微远一点 */
-            padding-top: 60px; /* 作者名位置稍微靠下 */
+            margin-left: 35px;
+            padding-top: 60px;
             font-weight: 300;
         }
 
@@ -144,6 +176,14 @@
 <body>
 
     <div class="container" id="main-container">
+        
+        <a href="https://chinagalaxy2002.github.io/xiangyuguo/" class="home-btn" aria-label="返回主页">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+        </a>
+
         <div class="top-section">
             <div class="logo-circle">
                 <div class="logo-text">古<br>文</div>
@@ -160,179 +200,66 @@
     </div>
 
     <script>
-        // --- 扩充后的诗词数据库 ---
+        // --- 完整诗词数据库 (40首) ---
         const poemsData = [
-{
-                lines: ["醉后不知天在水", "满船清梦压星河"],
-                author: "唐温如 · 题龙阳县青草湖"
-            },
-            {
-                lines: ["疏影横斜水清浅", "暗香浮动月黄昏"],
-                author: "林逋 · 山园小梅"
-            },
-            {
-                lines: ["柴门闻犬吠", "风雪夜归人"],
-                author: "刘长卿 · 逢雪宿芙蓉山主人"
-            },
-            {
-                lines: ["行到水穷处", "坐看云起时"],
-                author: "王维 · 终南别业"
-            },
+            // --- 经典意境 ---
+            { lines: ["醉后不知天在水", "满船清梦压星河"], author: "唐温如 · 题龙阳县青草湖" },
+            { lines: ["疏影横斜水清浅", "暗香浮动月黄昏"], author: "林逋 · 山园小梅" },
+            { lines: ["柴门闻犬吠", "风雪夜归人"], author: "刘长卿 · 逢雪宿芙蓉山主人" },
+            { lines: ["行到水穷处", "坐看云起时"], author: "王维 · 终南别业" },
             
             // --- 唯美/相思 ---
-            {
-                lines: ["晓看天色暮看云", "行也思君", "坐也思君"],
-                author: "唐寅 · 一剪梅"
-            },
-            {
-                lines: ["人生若只如初见", "何事秋风悲画扇"],
-                author: "纳兰性德 · 木兰花"
-            },
-            {
-                lines: ["玲珑骰子安红豆", "入骨相思知不知"],
-                author: "温庭筠 · 南歌子"
-            },
-            {
-                lines: ["身无彩凤双飞翼", "心有灵犀一点通"],
-                author: "李商隐 · 无题"
-            },
-            {
-                lines: ["只愿君心似我心", "定不负", "相思意"],
-                author: "李之仪 · 卜算子"
-            },
-            {
-                lines: ["两情若是久长时", "又岂在", "朝朝暮暮"],
-                author: "秦观 · 鹊桥仙"
-            },
-            {
-                lines: ["曾经沧海难为水", "除却巫山不是云"],
-                author: "元稹 · 离思"
-            },
+            { lines: ["晓看天色暮看云", "行也思君", "坐也思君"], author: "唐寅 · 一剪梅" },
+            { lines: ["人生若只如初见", "何事秋风悲画扇"], author: "纳兰性德 · 木兰花" },
+            { lines: ["玲珑骰子安红豆", "入骨相思知不知"], author: "温庭筠 · 南歌子" },
+            { lines: ["身无彩凤双飞翼", "心有灵犀一点通"], author: "李商隐 · 无题" },
+            { lines: ["只愿君心似我心", "定不负", "相思意"], author: "李之仪 · 卜算子" },
+            { lines: ["两情若是久长时", "又岂在", "朝朝暮暮"], author: "秦观 · 鹊桥仙" },
+            { lines: ["曾经沧海难为水", "除却巫山不是云"], author: "元稹 · 离思" },
 
             // --- 人生/感悟 ---
-            {
-                lines: ["欲买桂花同载酒", "终不似", "少年游"],
-                author: "刘过 · 唐多令"
-            },
-            {
-                lines: ["回首向来萧瑟处", "归去", "也无风雨也无晴"],
-                author: "苏轼 · 定风波"
-            },
-            {
-                lines: ["人生天地间", "忽如远行客"],
-                author: "古诗十九首"
-            },
-            {
-                lines: ["世间无限丹青手", "一片伤心画不成"],
-                author: "高蟾 · 金陵晚望"
-            },
-            {
-                lines: ["无可奈何花落去", "似曾相识燕归来"],
-                author: "晏殊 · 浣溪沙"
-            },
-            {
-                lines: ["此情可待成追忆", "只是当时已惘然"],
-                author: "李商隐 · 锦瑟"
-            },
-            {
-                lines: ["当时只道", "是寻常"],
-                author: "纳兰性德 · 浣溪沙"
-            },
+            { lines: ["欲买桂花同载酒", "终不似", "少年游"], author: "刘过 · 唐多令" },
+            { lines: ["回首向来萧瑟处", "归去", "也无风雨也无晴"], author: "苏轼 · 定风波" },
+            { lines: ["人生天地间", "忽如远行客"], author: "古诗十九首" },
+            { lines: ["世间无限丹青手", "一片伤心画不成"], author: "高蟾 · 金陵晚望" },
+            { lines: ["无可奈何花落去", "似曾相识燕归来"], author: "晏殊 · 浣溪沙" },
+            { lines: ["此情可待成追忆", "只是当时已惘然"], author: "李商隐 · 锦瑟" },
+            { lines: ["当时只道", "是寻常"], author: "纳兰性德 · 浣溪沙" },
 
             // --- 孤独/清冷 ---
-            {
-                lines: ["今宵酒醒何处", "杨柳岸", "晓风残月"],
-                author: "柳永 · 雨霖铃"
-            },
-            {
-                lines: ["只有相思无尽处", "拼了长命", "做鸳鸯"],
-                author: "顾夐 · 诉衷情"
-            },
-            {
-                lines: ["小楼一夜听春雨", "深巷明朝卖杏花"],
-                author: "陆游 · 临安春雨初霁"
-            },
-            {
-                lines: ["晚来天欲雪", "能饮一杯无"],
-                author: "白居易 · 问刘十九"
-            },
-            {
-                lines: ["举杯邀明月", "对影成三人"],
-                author: "李白 · 月下独酌"
-            },
-            {
-                lines: ["独立小桥风满袖", "平林新月人归后"],
-                author: "冯延巳 · 鹊踏枝"
-            },
+            { lines: ["今宵酒醒何处", "杨柳岸", "晓风残月"], author: "柳永 · 雨霖铃" },
+            { lines: ["只有相思无尽处", "拼了长命", "做鸳鸯"], author: "顾夐 · 诉衷情" },
+            { lines: ["小楼一夜听春雨", "深巷明朝卖杏花"], author: "陆游 · 临安春雨初霁" },
+            { lines: ["晚来天欲雪", "能饮一杯无"], author: "白居易 · 问刘十九" },
+            { lines: ["举杯邀明月", "对影成三人"], author: "李白 · 月下独酌" },
+            { lines: ["独立小桥风满袖", "平林新月人归后"], author: "冯延巳 · 鹊踏枝" },
 
             // --- 景色/阔达 ---
-            {
-                lines: ["落霞与孤鹜齐飞", "秋水共长天一色"],
-                author: "王勃 · 滕王阁序"
-            },
-            {
-                lines: ["相看两不厌", "只有敬亭山"],
-                author: "李白 · 独坐敬亭山"
-            },
-            {
-                lines: ["大漠孤烟直", "长河落日圆"],
-                author: "王维 · 使至塞上"
-            },
-            {
-                lines: ["星垂平野阔", "月涌大江流"],
-                author: "杜甫 · 旅夜书怀"
-            },
-            {
-                lines: ["海内存知己", "天涯若比邻"],
-                author: "王勃 · 送杜少府"
-            },
+            { lines: ["落霞与孤鹜齐飞", "秋水共长天一色"], author: "王勃 · 滕王阁序" },
+            { lines: ["相看两不厌", "只有敬亭山"], author: "李白 · 独坐敬亭山" },
+            { lines: ["大漠孤烟直", "长河落日圆"], author: "王维 · 使至塞上" },
+            { lines: ["星垂平野阔", "月涌大江流"], author: "杜甫 · 旅夜书怀" },
+            { lines: ["海内存知己", "天涯若比邻"], author: "王勃 · 送杜少府" },
             
             // --- 时光/离别 ---
-            {
-                lines: ["去年今日此门中", "人面桃花相映红"],
-                author: "崔护 · 题都城南庄"
-            },
-            {
-                lines: ["人面不知何处去", "桃花依旧笑春风"],
-                author: "崔护 · 题都城南庄"
-            },
-            {
-                lines: ["桃李春风一杯酒", "江湖夜雨十年灯"],
-                author: "黄庭坚 · 寄黄几复"
-            },
-            {
-                lines: ["浮云一别后", "流水十年间"],
-                author: "韦应物 · 淮上喜会梁川故人"
-            },
-            {
-                lines: ["莫愁前路无知己", "天下谁人不识君"],
-                author: "高适 · 别董大"
-            },
-            {
-                lines: ["劝君更尽一杯酒", "西出阳关无故人"],
-                author: "王维 · 送元二使安西"
-            },
+            { lines: ["去年今日此门中", "人面桃花相映红"], author: "崔护 · 题都城南庄" },
+            { lines: ["人面不知何处去", "桃花依旧笑春风"], author: "崔护 · 题都城南庄" },
+            { lines: ["桃李春风一杯酒", "江湖夜雨十年灯"], author: "黄庭坚 · 寄黄几复" },
+            { lines: ["浮云一别后", "流水十年间"], author: "韦应物 · 淮上喜会梁川故人" },
+            { lines: ["莫愁前路无知己", "天下谁人不识君"], author: "高适 · 别董大" },
+            { lines: ["劝君更尽一杯酒", "西出阳关无故人"], author: "王维 · 送元二使安西" },
             
             // --- 哲思 ---
-            {
-                lines: ["众里寻他千百度", "蓦然回首", "那人却在", "灯火阑珊处"],
-                author: "辛弃疾 · 青玉案"
-            },
-            {
-                lines: ["不知江月待何人", "但见长江送流水"],
-                author: "张若虚 · 春江花月夜"
-            },
-            {
-                lines: ["山中相送罢", "日暮掩柴扉", "春草明年绿", "王孙归不归"],
-                author: "王维 · 送别"
-            }
+            { lines: ["众里寻他千百度", "蓦然回首", "那人却在", "灯火阑珊处"], author: "辛弃疾 · 青玉案" },
+            { lines: ["不知江月待何人", "但见长江送流水"], author: "张若虚 · 春江花月夜" },
+            { lines: ["山中相送罢", "日暮掩柴扉", "春草明年绿", "王孙归不归"], author: "王维 · 送别" }
         ];
 
         let currentIndex = -1;
         const poemDisplay = document.getElementById('poem-display');
         const mainContainer = document.getElementById('main-container');
 
-        // 获取当前日期并格式化为中文
+        // 日期更新
         function updateDate() {
             const dateEl = document.getElementById('date-display');
             const now = new Date();
@@ -351,7 +278,7 @@
             dateEl.textContent = `${numToChinese(month)} 月 ${numToChinese(day)} 日`;
         }
 
-        // 随机获取诗句
+        // 随机获取
         function getRandomPoem() {
             let newIndex;
             do {
@@ -361,18 +288,15 @@
             return poemsData[currentIndex];
         }
 
-        // 渲染诗句
+        // 渲染显示
         function displayPoem() {
             poemDisplay.classList.add('fade-out');
 
             setTimeout(() => {
                 const poem = getRandomPoem();
-                
-                // 清空内容
                 poemDisplay.innerHTML = '';
 
-                // 生成诗句列 (注意：因为 writing-mode: vertical-rl，DOM 顺序即为从右向左显示顺序)
-                // 也就是：数组第一个元素会显示在最右边
+                // 生成诗句列
                 poem.lines.forEach(line => {
                     const lineEl = document.createElement('div');
                     lineEl.className = 'poem-line';
@@ -380,7 +304,7 @@
                     poemDisplay.appendChild(lineEl);
                 });
 
-                // 生成作者列 (放在最后，也就是最左边)
+                // 生成作者列
                 const authorEl = document.createElement('div');
                 authorEl.className = 'poem-author';
                 authorEl.textContent = poem.author;
@@ -396,8 +320,13 @@
             displayPoem();
         };
 
-        // 点击切换
-        mainContainer.addEventListener('click', displayPoem);
+        // 点击切换事件 (防止主页按钮触发)
+        mainContainer.addEventListener('click', (event) => {
+            if (event.target.closest('.home-btn')) {
+                return;
+            }
+            displayPoem();
+        });
 
     </script>
 </body>
